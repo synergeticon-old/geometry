@@ -6,7 +6,24 @@ import (
 	"github.com/gonum/matrix/mat64"
 )
 
-func NewXRotation(angle float64) *mat64.Dense {
+type TransMat struct {
+	mat64.Dense
+}
+
+func NewTransMat() *TransMat {
+	data := []float64{
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1,
+	}
+	mat := mat64.NewDense(4, 4, data)
+	tmat := &TransMat{}
+	tmat.Clone(mat)
+	return tmat
+}
+
+func (tmat *TransMat) XRotation(angle float64) {
 	cosine := math.Cos(angle)
 	sine := math.Sin(angle)
 
@@ -18,10 +35,13 @@ func NewXRotation(angle float64) *mat64.Dense {
 	}
 
 	mat := mat64.NewDense(4, 4, data)
-	return mat
+
+	m2 := &TransMat{}
+	m2.Clone(tmat)
+	tmat.Mul(m2, mat)
 }
 
-func NewYRotation(angle float64) *mat64.Dense {
+func (tmat *TransMat) YRotation(angle float64) {
 	cosine := math.Cos(angle)
 	sine := math.Sin(angle)
 
@@ -33,10 +53,13 @@ func NewYRotation(angle float64) *mat64.Dense {
 	}
 
 	mat := mat64.NewDense(4, 4, data)
-	return mat
+
+	m2 := &TransMat{}
+	m2.Clone(tmat)
+	tmat.Mul(m2, mat)
 }
 
-func NewZRotation(angle float64) *mat64.Dense {
+func (tmat *TransMat) ZRotation(angle float64) {
 	cosine := math.Cos(angle)
 	sine := math.Sin(angle)
 
@@ -48,10 +71,13 @@ func NewZRotation(angle float64) *mat64.Dense {
 	}
 
 	mat := mat64.NewDense(4, 4, data)
-	return mat
+
+	m2 := &TransMat{}
+	m2.Clone(tmat)
+	tmat.Mul(m2, mat)
 }
 
-func NewTranslation(dX, dY, dZ float64) *mat64.Dense {
+func (tmat *TransMat) Translation(dX, dY, dZ float64) {
 	data := []float64{
 		1, 0, 0, dX,
 		0, 1, 0, dY,
@@ -59,5 +85,8 @@ func NewTranslation(dX, dY, dZ float64) *mat64.Dense {
 		0, 0, 0, 1,
 	}
 	mat := mat64.NewDense(4, 4, data)
-	return mat
+
+	m2 := &TransMat{}
+	m2.Clone(tmat)
+	tmat.Mul(m2, mat)
 }
