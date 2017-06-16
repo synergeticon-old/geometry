@@ -6,10 +6,12 @@ import (
 	"github.com/gonum/matrix/mat64"
 )
 
+// TransMat is the Transformation Matrix representation.
 type TransMat struct {
 	mat64.Dense
 }
 
+// NewTransMat creates a new Transformation Matrix which an 4x4 Idendity.
 func NewTransMat() *TransMat {
 	data := []float64{
 		1, 0, 0, 0,
@@ -23,6 +25,7 @@ func NewTransMat() *TransMat {
 	return tmat
 }
 
+// XRotation applies a X-Axis rotation.
 func (tmat *TransMat) XRotation(angle float64) {
 	cosine := math.Cos(angle)
 	sine := math.Sin(angle)
@@ -41,6 +44,7 @@ func (tmat *TransMat) XRotation(angle float64) {
 	tmat.Mul(m2, mat)
 }
 
+// YRotation applies a Y-Axis rotation.
 func (tmat *TransMat) YRotation(angle float64) {
 	cosine := math.Cos(angle)
 	sine := math.Sin(angle)
@@ -59,6 +63,7 @@ func (tmat *TransMat) YRotation(angle float64) {
 	tmat.Mul(m2, mat)
 }
 
+// ZRotation applies a Z-Axis rotation.
 func (tmat *TransMat) ZRotation(angle float64) {
 	cosine := math.Cos(angle)
 	sine := math.Sin(angle)
@@ -77,6 +82,7 @@ func (tmat *TransMat) ZRotation(angle float64) {
 	tmat.Mul(m2, mat)
 }
 
+// Translation applies a Translation.
 func (tmat *TransMat) Translation(dX, dY, dZ float64) {
 	data := []float64{
 		1, 0, 0, dX,
@@ -89,4 +95,11 @@ func (tmat *TransMat) Translation(dX, dY, dZ float64) {
 	m2 := &TransMat{}
 	m2.Clone(tmat)
 	tmat.Mul(m2, mat)
+}
+
+// Transform applis Transformation to a Vector
+func (tmat *TransMat) Transform(vec *mat64.Vector) *mat64.Vector {
+	v := &mat64.Vector{}
+	v.MulVec(tmat, vec)
+	return v
 }
