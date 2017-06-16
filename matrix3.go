@@ -99,7 +99,18 @@ func (tmat *TransMat) Translation(dX, dY, dZ float64) {
 
 // Transform applis Transformation to a Vector
 func (tmat *TransMat) Transform(vec *mat64.Vector) *mat64.Vector {
+
+	data := []float64{
+		vec.At(0, 0),
+		vec.At(1, 0),
+		vec.At(2, 0),
+		1,
+	}
+
+	g := mat64.NewVector(4, data)
 	v := &mat64.Vector{}
-	v.MulVec(tmat, vec)
-	return v
+	v.MulVec(tmat, g)
+
+	transVec := v.SliceVec(0, 3)
+	return transVec
 }

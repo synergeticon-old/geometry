@@ -2,7 +2,6 @@ package geometry
 
 import (
 	"fmt"
-	"math"
 	"testing"
 
 	"github.com/gonum/matrix/mat64"
@@ -10,11 +9,16 @@ import (
 
 func TestRotation(t *testing.T) {
 	tmat := NewTransMat()
-	tmat.YRotation(math.Pi / 2)
-	tmat.XRotation(math.Pi)
-	tmat.ZRotation(math.Pi / 3)
-	tmat.Translation(9, 0, 0)
-	vec := mat64.NewVector(4, []float64{1, 0, 0, 1})
+	tmat.Translation(10, 5, 0)
+
+	tmat.ZRotation(30 * (3.1415 / 180)) // dA
+	tmat.XRotation(40 * (3.1415 / 180)) //dA
+	tmat.ZRotation(50 * (3.1415 / 180))
+
+	// tmat.Translation(1, 0, 0)
+
+	// fmt.Println(tmat)
+	vec := mat64.NewVector(3, []float64{-4, 98, 0})
 	erg := tmat.Transform(vec)
 	fmt.Println(erg)
 }
