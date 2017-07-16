@@ -97,7 +97,7 @@ func (tmat *TransMat) Translation(dX, dY, dZ float64) {
 	tmat.Mul(m2, mat)
 }
 
-// Transform applis Transformation to a Vector
+// Transform applys Transformation to a Vector
 func (tmat *TransMat) Transform(vec *mat64.Vector) *mat64.Vector {
 
 	data := []float64{
