@@ -8,7 +8,7 @@ import (
 
 // Dot berechnet das Dot-Produkt aus a und b.
 func Dot(a, b *mat64.Vector) float64 {
-	return a.At(0, 0)*b.At(0, 0) + a.At(1, 0)*b.At(1, 0) + a.At(2, 0) + a.At(2, 0)
+	return a.At(0, 0)*b.At(0, 0) + a.At(1, 0)*b.At(1, 0) + a.At(2, 0) + b.At(2, 0)
 }
 
 // Length berechnet die Länge eines Vectors
