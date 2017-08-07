@@ -40,3 +40,12 @@ func (p *Plane3) SetFromNormalAndCoplanarPoint(normal *mat64.Vector, point *mat6
 	p.Normal = normal
 	p.Constant = -Dot(point, p.Normal)
 }
+
+// ProjectPoint projects a point on the plane
+func (p *Plane3) ProjectPoint(point *mat64.Vector) *mat64.Vector {
+	projectedPoint := p.Normal
+	scale := -p.DistanceToPoint(point)
+	projectedPoint.ScaleVec(scale, projectedPoint)
+	projectedPoint.AddVec(projectedPoint, point)
+	return projectedPoint
+}
