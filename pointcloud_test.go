@@ -2,6 +2,8 @@ package geometry
 
 import (
 	"testing"
+
+	"github.com/gonum/matrix/mat64"
 )
 
 func TestSavePLY(t *testing.T) {
@@ -12,4 +14,30 @@ func TestSavePLY(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+}
+
+func TestTransform(t *testing.T) {
+	pc := PointCloud{}
+
+	v1 := mat64.NewVector(3, []float64{1, 2, 3})
+	v2 := mat64.NewVector(3, []float64{1, 0, 0})
+	v3 := mat64.NewVector(3, []float64{1, 1, 1})
+	pc.Vectors = append(pc.Vectors, v1, v2, v3)
+
+	tmat := NewTransMat()
+	tmat.Translation(10, 0, 0)
+
+	pc.Transform(tmat)
+	if v1.At(0, 0)+10 != pc.Vectors[0].At(0, 0) {
+		t.Error("translation by 10 failed")
+	}
+
+	if v2.At(0, 0)+10 != pc.Vectors[1].At(0, 0) {
+		t.Error("translation by 10 failed")
+	}
+
+	if v3.At(0, 0)+10 != pc.Vectors[2].At(0, 0) {
+		t.Error("translation by 10 failed")
+	}
+
 }

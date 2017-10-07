@@ -118,3 +118,10 @@ func (pC *PointCloud) SavePLY(path string) error {
 	return ioutil.WriteFile(path, ply, 0644)
 
 }
+
+// Transform transforms pointcloud with transformation matrix
+func (pC *PointCloud) Transform(transMat *TransMat) {
+	for i, vector := range pC.Vectors {
+		pC.Vectors[i] = transMat.Transform(vector)
+	}
+}
