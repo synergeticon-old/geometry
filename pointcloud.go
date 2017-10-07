@@ -3,13 +3,16 @@ package geometry
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"math/rand"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 
 	"github.com/gonum/matrix/mat64"
+	"github.com/google/uuid"
 )
 
 // PointCloud Represents an array of vectors
@@ -124,4 +127,20 @@ func (pC *PointCloud) Transform(transMat *TransMat) {
 	for i, vector := range pC.Vectors {
 		pC.Vectors[i] = transMat.Transform(vector)
 	}
+}
+
+func (pC *PointCloud) ShowInMeshlab() error {
+	tmpPath := os.TempDir() + "/" + uuid.New().String() + "tmp.ply"
+	fmt.Println(tmpPath)
+	err := pC.SavePLY(tmpPath)
+	if err != nil {
+		return err
+	}
+	meshlab := exec.Command("meshlab", tmpPath)
+	err = meshlab.Start()
+	if err != nil {
+		return errors.New("meshlab could not be started")
+	}
+	meshlab.Wait()
+	return os.Remove(tmpPath)
 }

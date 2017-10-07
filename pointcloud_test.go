@@ -41,3 +41,12 @@ func TestTransform(t *testing.T) {
 	}
 
 }
+
+func TestViewer(t *testing.T) {
+	pc := PointCloud{}
+	pc.FillRandom(100)
+	err := pc.ShowInMeshlab()
+	if err != nil {
+		t.Error(err)
+	}
+}
