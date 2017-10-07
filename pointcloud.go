@@ -17,6 +17,11 @@ type PointCloud struct {
 	Vectors []*mat64.Vector
 }
 
+// Add adds a Vector to Pointcloud
+func (pC *PointCloud) Add(vec *mat64.Vector) {
+	pC.Vectors = append(pC.Vectors, vec)
+}
+
 // FillRandom fills pointcloud with random vectors
 func (pC *PointCloud) FillRandom(count int) {
 	for i := 0; i < count; i++ {
