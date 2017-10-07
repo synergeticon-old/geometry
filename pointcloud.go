@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"os"
 	"os/exec"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -130,13 +131,19 @@ func (pC *PointCloud) Transform(transMat *TransMat) {
 }
 
 func (pC *PointCloud) ShowInMeshlab() error {
-	tmpPath := os.TempDir() + "/" + uuid.New().String() + "tmp.ply"
+	tmpPath := os.TempDir() + "/" + uuid.New().String() + ".ply"
 	fmt.Println(tmpPath)
 	err := pC.SavePLY(tmpPath)
 	if err != nil {
 		return err
 	}
-	meshlab := exec.Command("meshlab", tmpPath)
+
+	meshlabExecPath := "meshlab"
+	if runtime.GOOS == "windows" {
+		meshlabExecPath = `C:\Program Files\VCG\MeshLab\meshlab.exe`
+	}
+
+	meshlab := exec.Command(meshlabExecPath, tmpPath)
 	err = meshlab.Start()
 	if err != nil {
 		return errors.New("meshlab could not be started")
