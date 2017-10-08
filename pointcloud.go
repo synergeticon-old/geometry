@@ -130,6 +130,7 @@ func (pC *PointCloud) Transform(transMat *TransMat) {
 	}
 }
 
+// ShowInMeshlab shows the Pointcloudobject in meshlab
 func (pC *PointCloud) ShowInMeshlab() error {
 	tmpPath := os.TempDir() + "/" + uuid.New().String() + ".ply"
 	fmt.Println(tmpPath)
