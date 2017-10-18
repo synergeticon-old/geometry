@@ -1,18 +1,9 @@
 package geometry
 
 import (
-	"image"
-
 	"github.com/gonum/matrix/mat64"
 
 	"gonum.org/v1/plot/plotter"
-
-	"github.com/google/gxui"
-	"github.com/google/gxui/drivers/gl"
-	"github.com/google/gxui/themes/dark"
-	"gonum.org/v1/plot"
-	"gonum.org/v1/plot/vg/draw"
-	"gonum.org/v1/plot/vg/vgimg"
 )
 
 const dpi = 96
@@ -30,22 +21,22 @@ func VecToXYs(vectors []*mat64.Vector, xIndex, yIndex int) plotter.XYs {
 }
 
 // ShowPlot displays a Plot in a Window
-func ShowPlot(p *plot.Plot, h, w int) {
-	gl.StartDriver(func(driver gxui.Driver) {
+// func ShowPlot(p *plot.Plot, h, w int) {
+// 	gl.StartDriver(func(driver gxui.Driver) {
 
-		m := image.NewRGBA(image.Rect(0, 0, w*dpi, h*dpi))
-		c := vgimg.NewWith(vgimg.UseImage(m))
-		p.Draw(draw.New(c))
+// 		m := image.NewRGBA(image.Rect(0, 0, w*dpi, h*dpi))
+// 		c := vgimg.NewWith(vgimg.UseImage(m))
+// 		p.Draw(draw.New(c))
 
-		width, height := w*dpi, h*dpi
+// 		width, height := w*dpi, h*dpi
 
-		theme := dark.CreateTheme(driver)
-		img := theme.CreateImage()
-		window := theme.CreateWindow(width, height, "Image viewer")
-		texture := driver.CreateTexture(m, 1.0)
-		img.SetTexture(texture)
-		window.AddChild(img)
-		window.OnClose(driver.Terminate)
-	})
+// 		theme := dark.CreateTheme(driver)
+// 		img := theme.CreateImage()
+// 		window := theme.CreateWindow(width, height, "Image viewer")
+// 		texture := driver.CreateTexture(m, 1.0)
+// 		img.SetTexture(texture)
+// 		window.AddChild(img)
+// 		window.OnClose(driver.Terminate)
+// 	})
 
-}
+// }
