@@ -1,14 +1,15 @@
-package geometry
+package geometry_test
 
 import (
 	"fmt"
 	"testing"
 
 	"github.com/gonum/matrix/mat64"
+	"github.com/synergeticon/geometry"
 )
 
 func TestRotation(t *testing.T) {
-	tmat := NewTransMat()
+	tmat := geometry.NewTransMat()
 	tmat.Translation(10, 5, 0)
 
 	tmat.ZRotation(30 * (3.1415 / 180)) // dA
