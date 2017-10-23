@@ -23,3 +23,17 @@ func Normalize(a *mat64.Vector) {
 		a.ScaleVec(1/length, a)
 	}
 }
+
+// DistanceSquared returns the squared distance of two given points
+func DistanceSquared(a, b *mat64.Vector) float64 {
+	dx := a.At(0, 0) - b.At(0, 0)
+	dy := a.At(1, 0) - b.At(1, 0)
+	dz := a.At(2, 0) - b.At(2, 0)
+	return dx*dx + dy*dy + dz*dz
+}
+
+// Distance returns the Distance between two vectors
+func Distance(a, b *mat64.Vector) float64 {
+	distanceSq := DistanceSquared(a, b)
+	return math.Sqrt(distanceSq)
+}
