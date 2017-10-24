@@ -22,8 +22,8 @@ type PointCloud struct {
 }
 
 // Add adds a Vector to Pointcloud
-func (pC *PointCloud) Add(vec *mat64.Vector) {
-	pC.Vectors = append(pC.Vectors, vec)
+func (pC *PointCloud) Add(vec ...*mat64.Vector) {
+	pC.Vectors = append(pC.Vectors, vec...)
 }
 
 // FillRandom fills pointcloud with random vectors
@@ -36,6 +36,11 @@ func (pC *PointCloud) FillRandom(count int) {
 		})
 		pC.Vectors = append(pC.Vectors, vec)
 	}
+}
+
+// Length returns the amount of vertices in PoinCloud
+func (pC *PointCloud) Length() int {
+	return len(pC.Vectors)
 }
 
 // ReadPCD reads in PCD data from Point Cloud Library
