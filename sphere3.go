@@ -21,7 +21,7 @@ func (sp *Sphere3) SetFromPoints(points []*mat64.Vector) {
 
 	var maxRadiusSq float64
 	for _, point := range points {
-		dist := Distance(sp.Center, point)
+		dist := DistanceSquared(sp.Center, point)
 		maxRadiusSq = math.Max(maxRadiusSq, dist)
 	}
 

@@ -14,30 +14,30 @@ func TestSphereFromPoints(t *testing.T) {
 
 	v1 := mat64.NewVector(3, []float64{
 		0,
-		-1,
+		-2,
 		0,
 	})
 	v2 := mat64.NewVector(3, []float64{
 		0,
-		1,
+		2,
 		0,
 	})
 	v3 := mat64.NewVector(3, []float64{
 		0,
 		0,
-		1,
+		2,
 	})
 	v4 := mat64.NewVector(3, []float64{
 		0,
 		0,
-		-1,
+		-2,
 	})
 	points = append(points, v1, v2, v3, v4)
 
 	sph.SetFromPoints(points)
 
-	if sph.Radius != 1 {
-		t.Error("Radius should be 1 but is", sph.Radius)
+	if sph.Radius != 2 {
+		t.Error("Radius should be 2 but is", sph.Radius)
 	}
 
 	// Test for Center
