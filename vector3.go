@@ -6,6 +6,11 @@ import (
 	"github.com/gonum/matrix/mat64"
 )
 
+// NewVector3 Creates a new mat64 Vector in 3d
+func NewVector3(x, y, z float64) *mat64.Vector {
+	return mat64.NewVector(3, []float64{x, y, z})
+}
+
 // Dot berechnet das Dot-Produkt aus a und b.
 func Dot(a, b *mat64.Vector) float64 {
 	return mat64.Dot(a, b)
