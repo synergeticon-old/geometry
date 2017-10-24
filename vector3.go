@@ -42,3 +42,27 @@ func Distance(a, b *mat64.Vector) float64 {
 	distanceSq := DistanceSquared(a, b)
 	return math.Sqrt(distanceSq)
 }
+
+// MinVec returns a Vector with the minimal components of two vectors
+func MinVec(a, b *mat64.Vector) *mat64.Vector {
+	return mat64.NewVector(3, []float64{
+		math.Min(a.At(0, 0), b.At(0, 0)),
+		math.Min(a.At(1, 0), b.At(1, 0)),
+		math.Min(a.At(2, 0), b.At(2, 0)),
+	})
+}
+
+// MinVec returns a Vector with the minimal components of two vectors
+func MaxVec(a, b *mat64.Vector) *mat64.Vector {
+	return mat64.NewVector(3, []float64{
+		math.Max(a.At(0, 0), b.At(0, 0)),
+		math.Max(a.At(1, 0), b.At(1, 0)),
+		math.Max(a.At(2, 0), b.At(2, 0)),
+	})
+}
+
+func MultiplyScalar(a *mat64.Vector, scalar float64) {
+	a.SetVec(0, a.At(0, 0)*scalar)
+	a.SetVec(1, a.At(1, 0)*scalar)
+	a.SetVec(2, a.At(2, 0)*scalar)
+}
