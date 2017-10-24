@@ -25,11 +25,16 @@ func TestPassThroughFilter(t *testing.T) {
 		1,
 		1,
 	})
-	pc.Add(v1, v2, v3)
+	v4 := mat64.NewVector(3, []float64{
+		0,
+		-1,
+		1,
+	})
+	pc.Add(v1, v2, v3, v4)
 
 	flt := geometry.PassThroughFilter{}
 	flt.LimitHigh = 1.5
-	flt.LimitLow = 0
+	flt.LimitLow = -0.5
 	flt.SetFilterFieldName("y")
 
 	filtered := flt.Filter(pc)
