@@ -66,3 +66,9 @@ func MultiplyScalar(a *mat64.Vector, scalar float64) {
 	a.SetVec(1, a.At(1, 0)*scalar)
 	a.SetVec(2, a.At(2, 0)*scalar)
 }
+
+func AddScalar(a *mat64.Vector, scalar float64) {
+	a.SetVec(0, a.At(0, 0)+scalar)
+	a.SetVec(1, a.At(1, 0)+scalar)
+	a.SetVec(2, a.At(2, 0)+scalar)
+}
