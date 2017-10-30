@@ -1,7 +1,6 @@
 package geometry
 
 import (
-	"fmt"
 	"math"
 
 	"github.com/gonum/matrix/mat64"
@@ -107,9 +106,7 @@ func (cr *CatmullRome3) IntersectPlane(plane *Plane3) (*mat64.Vector, bool) {
 
 	for errorDistance > threshold && i < maxIterations {
 		intersection = cr.GetPoint(t)
-		fmt.Println(intersection)
 		errorDistance = math.Abs(plane.DistanceToPoint(intersection))
-		fmt.Println(errorDistance)
 		t = t + 0.001*errorDistance
 		i++
 	}
