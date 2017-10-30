@@ -1,6 +1,7 @@
 package geometry
 
 import (
+	"fmt"
 	"math"
 
 	"github.com/gonum/matrix/mat64"
@@ -91,6 +92,33 @@ func (cr *CatmullRome3) GetPoint(t float64) *mat64.Vector {
 
 	// 	return point;
 	return point
+}
+
+func (cr *CatmullRome3) IntersectPlane(plane *Plane3) (*mat64.Vector, bool) {
+	intersection := mat64.NewVector(3, []float64{0, 0, 0})
+
+	threshold := 10e-10
+	maxIterations := 10000
+
+	errorDistance := math.Inf(1)
+
+	t := 0.0
+	i := 0
+
+	for errorDistance > threshold && i < maxIterations {
+		intersection = cr.GetPoint(t)
+		fmt.Println(intersection)
+		errorDistance = math.Abs(plane.DistanceToPoint(intersection))
+		fmt.Println(errorDistance)
+		t = t + 0.001*errorDistance
+		i++
+	}
+
+	if errorDistance > threshold {
+		return nil, false
+	}
+
+	return intersection, true
 }
 
 type CubicPoly struct {
