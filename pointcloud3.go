@@ -86,7 +86,7 @@ func (pC *PointCloud) ReadPCD(path string) error {
 		}
 
 		// Erst nach erkennen dieser Zeile werden Vectoren erstellt.
-		if line == "DATA ascii" {
+		if line == "DATA ascii" || line == "end_header" {
 			isPoint = true
 		}
 	}
