@@ -18,7 +18,9 @@ import (
 
 // PointCloud Represents an array of vectors
 type PointCloud struct {
-	Vectors []*mat64.Vector
+	Vectors    []*mat64.Vector
+	boxKNNSize *mat64.Vector
+	k          int
 }
 
 // Add adds a Vector to Pointcloud
@@ -156,4 +158,49 @@ func (pC *PointCloud) ShowInMeshlab() error {
 	}
 	meshlab.Wait()
 	return os.Remove(tmpPath)
+}
+
+// FindNearestNeighbors finds the closest k-Points to a given point
+func (pC *PointCloud) FindNearestNeighbors(point *mat64.Vector, k int) PointCloud {
+	nn := PointCloud{}
+
+	// If the best density is not estimated yet:
+	if pC.boxKNNSize == nil || pC.k != k {
+		box := NewBox3(nil, nil)
+
+		size := mat64.NewVector(3, []float64{0, 0, 0})
+		box.SetFromCenterAndSize(point, size)
+
+		foundK := 0
+
+		for i := 0; i < 1000000; i++ {
+			if foundK >= k {
+				break
+			}
+
+			if i > 0 {
+				foundK = 0
+				box.ExpandByScalar(0.0001)
+			}
+
+			for _, point := range pC.Vectors {
+				if box.ContainsPoint(point) {
+					// nn.Add(point)
+					foundK++
+				}
+			}
+
+		}
+		pC.boxKNNSize = box.GetSize()
+	}
+
+	box := NewBox3(nil, nil)
+	box.SetFromCenterAndSize(point, pC.boxKNNSize)
+	for _, point := range pC.Vectors {
+		if box.ContainsPoint(point) {
+			nn.Add(point)
+		}
+	}
+
+	return nn
 }

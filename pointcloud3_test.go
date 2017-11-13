@@ -51,3 +51,20 @@ func TestViewer(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestFindNearestNeighbors(t *testing.T) {
+	pc := geometry.PointCloud{}
+	pc.FillRandom(1000)
+	pc.ShowInMeshlab()
+
+	nn := pc.FindNearestNeighbors(pc.Vectors[3], 5)
+	nn.ShowInMeshlab()
+
+	nn = pc.FindNearestNeighbors(pc.Vectors[3], 5)
+	nn.ShowInMeshlab()
+
+	nn = pc.FindNearestNeighbors(pc.Vectors[3], 5)
+	nn.ShowInMeshlab()
+
+	t.Error()
+}
