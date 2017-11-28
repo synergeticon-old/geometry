@@ -3,7 +3,6 @@ package geometry
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"math/rand"
 	"os"
@@ -140,7 +139,6 @@ func (pC *PointCloud) Transform(transMat *TransMat) {
 // ShowInMeshlab shows the Pointcloudobject in meshlab
 func (pC *PointCloud) ShowInMeshlab() error {
 	tmpPath := os.TempDir() + "/" + uuid.New().String() + ".ply"
-	fmt.Println(tmpPath)
 	err := pC.SavePLY(tmpPath)
 	if err != nil {
 		return err

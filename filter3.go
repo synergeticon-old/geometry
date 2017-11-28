@@ -1,8 +1,6 @@
 package geometry
 
 import (
-	"fmt"
-
 	"github.com/gonum/matrix/mat64"
 )
 
@@ -41,7 +39,6 @@ func (ptf *PassThroughFilter) Filter(pc PointCloud) PointCloud {
 	limit := ptf.LimitHigh - ptf.LimitLow
 	for _, point := range pc.Vectors {
 		value := plane.DistanceToPoint(point)
-		fmt.Println(value)
 		if value < limit && value > 0 {
 			filteredCloud.Vectors = append(filteredCloud.Vectors, point)
 		}
