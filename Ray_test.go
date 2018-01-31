@@ -1,6 +1,7 @@
 package geometry_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/gonum/matrix/mat64"
@@ -16,9 +17,11 @@ func TestRayDistanceToPoint(t *testing.T) {
 
 	ray := geometry.NewRayFromPoints(v1, v2)
 
+	fmt.Println(point, ray)
+
 	distance := ray.DistanceToPoint(point)
 	if distance != 1 {
-		t.Log("Should be 1, but is")
+		t.Log("Should be 1, but is", distance)
 		t.Fail()
 	}
 }

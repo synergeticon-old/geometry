@@ -14,8 +14,11 @@ type Ray struct {
 func NewRayFromPoints(a, b *mat64.Vector) Ray {
 	ray := Ray{}
 
+	ray.Direction = mat64.NewVector(3, []float64{0, 0, 0})
+	ray.Origin = mat64.NewVector(3, []float64{0, 0, 0})
+
 	ray.Direction.SubVec(b, a)
-	ray.Origin = a
+	ray.Origin.CopyVec(a)
 
 	return ray
 }
