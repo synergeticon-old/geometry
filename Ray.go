@@ -26,13 +26,27 @@ func NewRayFromPoints(a, b *mat64.Vector) Ray {
 // DistanceToPoint calculates the shortest Distance from Ray to point
 func (ray *Ray) DistanceToPoint(point *mat64.Vector) float64 {
 
+	// Mathematical expression:
+	//     |(point-ray.Origin) x ray.Direction|
+	// d = ------------------------------------
+	//                |ray.Direction|
+
 	v1 := mat64.NewVector(3, []float64{0, 0, 0})
+
 	v1.SubVec(point, ray.Origin)
 
-	directionDistance := Dot(v1, ray.Direction)
+	// Calculation cross-product of (point-Origin) and the Direction
+	v2 := mat64.NewVector(3, []float64{
+		(v1.At(1, 0) * ray.Direction.At(2, 0)) - (v1.At(2, 0) * ray.Direction.At(1, 0)),
+		(v1.At(2, 0) * ray.Direction.At(0, 0)) - (v1.At(0, 0) * ray.Direction.At(2, 0)),
+		(v1.At(0, 0) * ray.Direction.At(1, 0)) - (v1.At(1, 0) * ray.Direction.At(0, 0)),
+	})
 
-	// v1.copy( this.direction ).multiplyScalar( directionDistance ).add( this.origin );
-	v1.AddScaledVec(ray.Origin, directionDistance, ray.Direction)
+	// Calculation of Lengths
+	len1 := Length(v2)
+	len2 := Length(ray.Direction)
 
-	return Distance(point, v1)
+	distance := len1 / len2
+
+	return distance
 }
